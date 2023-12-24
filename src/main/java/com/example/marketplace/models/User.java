@@ -2,7 +2,9 @@ package com.example.marketplace.models;
 
 import com.example.marketplace.models.enums.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,7 +21,7 @@ public class User implements UserDetails {
     private Long id;
     @Column(name = "email", unique = true)
     private String email;
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
     @Column(name = "name")
     private String name;
@@ -30,21 +32,36 @@ public class User implements UserDetails {
     private Image avatar;
     @Column(name = "password", length = 1000)
     private String password;
-
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Product> products = new ArrayList<>();
-    private LocalDateTime dayOfCreated;
+    private LocalDateTime dateOfCreated;
 
-    @PrePersist
-    public void init() {
-        dayOfCreated = LocalDateTime.now();
+    public User() {
+        // конструктор без аргументів
     }
 
-    //security
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+        // ініціалізація інших полів за необхідності
+    }
+
+    @PrePersist
+    private void init() {
+        dateOfCreated = LocalDateTime.now();
+    }
+
+    // security
+
+    public boolean isAdmin() {
+        return roles.contains(Role.ROLE_ADMIN);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;

@@ -21,6 +21,7 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+
     public List<Product> listProducts(String title){
         if(title != null) productRepository.findByTitle(title);
         return productRepository.findAll();

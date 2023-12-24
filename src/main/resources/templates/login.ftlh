@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>eSales Point</h1><hr>
-<h4>Авторизация</h4>
+<h4>Авторизація</h4>
 <form action="/login" method="post">
     eMail: <input type="email" name="username"><br><br>
     Пароль: <input type="password" name="password"><br><br>

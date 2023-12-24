@@ -11,11 +11,14 @@
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="Вийти"/>
     </form>
+    <#if user.isAdmin()>
+    <a href="/admin">Панель адміністратора</a>
+    </#if>
     <#else>
     <a href="/login">Увійти</a>
     </#if>
     <hr>
-    <h4>Товары з всієї України</h4>
+    <h4>Товари з всієї України</h4>
     <form action="/" method="get">
         Пошук по назві оголошення: <input type="text" name="title">
         <input type="submit" value="Поиск"/>
