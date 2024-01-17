@@ -21,7 +21,7 @@
     <h4>Товари з всієї України</h4>
     <form action="/" method="get">
         Пошук по назві оголошення: <input type="text" name="title">
-        <input type="submit" value="Поиск"/>
+        <input type="submit" value="Пошук"/>
     </form>
     <#list products as product>
     <div>
